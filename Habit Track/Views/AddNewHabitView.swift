@@ -8,8 +8,62 @@
 import SwiftUI
 
 struct AddNewHabitView: View {
+    @State var habitName: String = ""
+    @State var habitPriority: Int?
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.backgroundMain
+                .ignoresSafeArea()
+            VStack {
+                Spacer()
+                Text("Add your new habit")
+                    .font(.system(size: 40))
+                    .foregroundStyle(Color.secondaryText)
+                    .padding(.top, 80)
+                VStack(alignment: .leading) {
+                    TextField("Habit name", text: $habitName)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 25))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color.gray, lineWidth: 2)
+                            )
+                    TextField("Habit priority", value: $habitPriority,
+                              format: .number)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .multilineTextAlignment(.center)
+                        .keyboardType(.numberPad)
+                        .font(.system(size: 25))
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(15)
+                        .padding(.vertical, 10)
+                        .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color.gray, lineWidth: 2)
+                            )
+                    Button {
+                        print("Habit added!")
+                    } label: {
+                        Text("Add your new habit")
+                            .font(.system(size: 25))
+                            .frame(maxWidth: .infinity, minHeight: 50)
+                            .background(habitName != "" && (habitPriority != nil) ? Color.green : Color.neutralElement)
+                            .foregroundStyle(Color.white)
+                            .cornerRadius(10)
+                            .padding(.vertical, 20)
+                    }
+                    .padding(.top, 40)
+                    .disabled(!(habitName != "" && (habitPriority != nil)))
+                }
+                .padding(50)
+                .padding(.top, -120)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                Spacer()
+            }
+        }
     }
 }
 
