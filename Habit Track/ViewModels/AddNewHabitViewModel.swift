@@ -26,7 +26,8 @@ class AddNewHabitViewModel: ObservableObject {
     }
     
     private func isHabitNameCorrect() -> Bool {
-        if habitName.trimmingCharacters(in: .whitespaces).count > 3 {
+        if habitName.trimmingCharacters(in: .whitespaces).count > 3 &&
+            habitName.trimmingCharacters(in: .whitespaces).count < 50 {
             errorMessage = ""
             isError = false
             if containsSpecialCharacter(habitName.trimmingCharacters(in: .whitespaces)) {
@@ -39,14 +40,20 @@ class AddNewHabitViewModel: ObservableObject {
                 return true
             }
         } else {
-            isError = true
-            errorMessage = "Habit name must be longer than 3 characters"
+            if habitName.trimmingCharacters(in: .whitespaces).count <= 3 {
+                isError = true
+                errorMessage = "Habit name must be longer than 3 characters"
+            } else {
+                isError = true
+                errorMessage = "Habit name must be shorter than 50 characters"
+                habitName = ""
+            }
         }
         return false
     }
     
     private func containsSpecialCharacter(_ input: String) -> Bool {
-        let allowedCharacters = CharacterSet.alphanumerics
+        let allowedCharacters = CharacterSet.alphanumerics.union(.whitespaces)
         return input.rangeOfCharacter(from: allowedCharacters.inverted) != nil ? true : false
     }
 }

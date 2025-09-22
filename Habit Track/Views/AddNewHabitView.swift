@@ -57,7 +57,7 @@ struct AddNewHabitView: View {
                             .padding(.vertical, 20)
                     }
                     .padding(.top, 40)
-                    .disabled(addNewHabitViewModel.isError)
+                    .disabled(addNewHabitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? false : true)
                     .alert(addNewHabitViewModel.errorMessage, isPresented: $addNewHabitViewModel.isError) {
                         Button("OK", role: .cancel) {}
                     }
