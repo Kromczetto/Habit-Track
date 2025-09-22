@@ -9,48 +9,44 @@ import Foundation
 
 class AddNewHabitViewModel: ObservableObject {
     @Published var habitName: String = ""
-    @Published var habitValue: Int?
+    @Published var habitValue: Int = 1
     @Published var errorMessage: String = ""
     @Published var isError: Bool = false
     
     func addHabit() {
-        if isHabitNameCorrect() && isHabitValueCorrect() {
+        if isHabitNameCorrect() {
             //Swift data
             
             habitName = ""
-            habitValue = nil
+            habitValue = 1
             print("Adding habit :)")
         } else {
             print("There is an error \(isError)")
         }
     }
     
-    private func isHabitValueCorrect() -> Bool {
-        if let habitValue = habitValue {
-            if habitValue > 0 && habitValue <= 10 {
+    private func isHabitNameCorrect() -> Bool {
+        if habitName.trimmingCharacters(in: .whitespaces).count > 3 {
+            errorMessage = ""
+            isError = false
+            if containsSpecialCharacter(habitName.trimmingCharacters(in: .whitespaces)) {
+                isError = true
+                errorMessage = "Habit name can not contain special characters"
+                return false
+            } else {
                 isError = false
                 errorMessage = ""
                 return true
             }
-            isError = true
-            errorMessage = "Habit value must be between 1 and 10"
-            return false
-        } else {
-            isError = true
-            errorMessage = "Habit value is required"
-            return false
-        }
-    }
-    
-    private func isHabitNameCorrect() -> Bool {
-        if habitName.count > 3 {
-            errorMessage = ""
-            isError = false
-            return true
         } else {
             isError = true
             errorMessage = "Habit name must be longer than 3 characters"
         }
         return false
+    }
+    
+    private func containsSpecialCharacter(_ input: String) -> Bool {
+        let allowedCharacters = CharacterSet.alphanumerics
+        return input.rangeOfCharacter(from: allowedCharacters.inverted) != nil ? true : false
     }
 }
