@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddNewHabitView: View {
-    @State var habitName: String = ""
-    @State var habitPriority: Int?
+    @StateObject var addNewHabitViewModel = AddNewHabitViewModel()
+    
     var body: some View {
         ZStack {
             Color.backgroundMain
@@ -21,7 +21,7 @@ struct AddNewHabitView: View {
                     .foregroundStyle(Color.secondaryText)
                     .padding(.top, 80)
                 VStack(alignment: .leading) {
-                    TextField("Habit name", text: $habitName)
+                    TextField("Habit name", text: $addNewHabitViewModel.habitName)
                         .textFieldStyle(PlainTextFieldStyle())
                         .multilineTextAlignment(.center)
                         .font(.system(size: 25))
@@ -31,7 +31,7 @@ struct AddNewHabitView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.gray, lineWidth: 2)
                             )
-                    TextField("Habit priority", value: $habitPriority,
+                    TextField("Habit priority", value: $addNewHabitViewModel.habitValue,
                               format: .number)
                         .textFieldStyle(PlainTextFieldStyle())
                         .multilineTextAlignment(.center)
@@ -45,18 +45,21 @@ struct AddNewHabitView: View {
                                     .stroke(Color.gray, lineWidth: 2)
                             )
                     Button {
-                        print("Habit added!")
+                        addNewHabitViewModel.addHabit()
                     } label: {
                         Text("Add your new habit")
                             .font(.system(size: 25))
                             .frame(maxWidth: .infinity, minHeight: 50)
-                            .background(habitName != "" && (habitPriority != nil) ? Color.green : Color.neutralElement)
+                            .background(addNewHabitViewModel.habitName != "" && (addNewHabitViewModel.habitValue != nil) ? Color.green : Color.neutralElement)
                             .foregroundStyle(Color.white)
                             .cornerRadius(10)
                             .padding(.vertical, 20)
                     }
                     .padding(.top, 40)
-                    .disabled(!(habitName != "" && (habitPriority != nil)))
+                    .disabled(!(addNewHabitViewModel.habitName != "" && (addNewHabitViewModel.habitValue != nil)))
+                    .alert(addNewHabitViewModel.errorMessage, isPresented: $addNewHabitViewModel.isError) {
+                        Button("OK", role: .cancel) {}
+                    }
                 }
                 .padding(50)
                 .padding(.top, -120)
