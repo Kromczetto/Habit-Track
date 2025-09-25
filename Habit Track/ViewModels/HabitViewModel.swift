@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-class AddNewHabitViewModel: ObservableObject {
+class HabitViewModel: ObservableObject {
     @Published var habitName: String = ""
     @Published var habitValue: Int = 1
     @Published var errorMessage: String = ""

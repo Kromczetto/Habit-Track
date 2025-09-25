@@ -11,16 +11,16 @@ import SwiftData
 struct BottomMenuView: View {
     @State private var index: Int = 0
     @Environment(\.modelContext) private var modelContext
-    @StateObject var addNewHabitViewModel: AddNewHabitViewModel
+    @StateObject var habitViewModel: HabitViewModel
     
     init(modelContext: ModelContext) {
-        _addNewHabitViewModel = StateObject(wrappedValue: AddNewHabitViewModel(modelContext: modelContext))
+        _habitViewModel = StateObject(wrappedValue: HabitViewModel(modelContext: modelContext))
     }
     
     var body: some View {
         TabView(selection: $index) {
             NavigationView {
-                HomeView(addNewHabitViewModel: addNewHabitViewModel)
+                HomeView(habitViewModel: habitViewModel)
                     .navigationBarBackButtonHidden(true)
             }
             .tabItem {
@@ -28,7 +28,7 @@ struct BottomMenuView: View {
             }
             .tag(0)
             NavigationView {
-                AddNewHabitView(addNewHabitViewModel: addNewHabitViewModel)
+                AddNewHabitView(habitViewModel: habitViewModel)
                     .navigationBarBackButtonHidden(true)
             }
             .tabItem {

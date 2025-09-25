@@ -10,7 +10,7 @@ import SwiftData
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
-    @StateObject var addNewHabitViewModel: AddNewHabitViewModel
+    @StateObject var habitViewModel: HabitViewModel
     
     var body: some View {
         ZStack {
@@ -23,12 +23,12 @@ struct HomeView: View {
                     .foregroundStyle(Color.secondaryText)
                     .padding(.top, 80)
                 List {
-                    if addNewHabitViewModel.habits.isEmpty {
+                    if habitViewModel.habits.isEmpty {
                         Text("You do not have any habits yet")
                             .fontWeight(.semibold)
                             .foregroundStyle(Color.secondaryText)
                     } else {
-                        ForEach(addNewHabitViewModel.habits, id: \.self) { habit in
+                        ForEach(habitViewModel.habits, id: \.self) { habit in
                             HStack {
                                 Text(habit.habitName)
                                     .fontWeight(.semibold)
@@ -40,7 +40,7 @@ struct HomeView: View {
                             }
                             .listRowBackground(Color.backgroundMain)
                         }
-                        .onDelete(perform: addNewHabitViewModel.deleteHabit)
+                        .onDelete(perform: habitViewModel.deleteHabit)
                     }
                 }
                 .listStyle(.plain)

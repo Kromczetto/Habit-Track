@@ -10,7 +10,7 @@ import SwiftData
 
 struct AddNewHabitView: View {
     @Environment(\.modelContext) private var modelContext
-    @StateObject var addNewHabitViewModel: AddNewHabitViewModel
+    @StateObject var habitViewModel: HabitViewModel
     
     var body: some View {
         ZStack {
@@ -24,7 +24,7 @@ struct AddNewHabitView: View {
                     .padding(.top, 80)
                 Spacer()
                 VStack(alignment: .leading) {
-                    TextField("Habit name", text: $addNewHabitViewModel.habitName)
+                    TextField("Habit name", text: $habitViewModel.habitName)
                         .textFieldStyle(PlainTextFieldStyle())
                         .multilineTextAlignment(.center)
                         .font(.system(size: 25))
@@ -38,7 +38,7 @@ struct AddNewHabitView: View {
                         Text("Value of the habit")
                             .fontWeight(.semibold)
                             .foregroundStyle(Color.secondaryText)
-                        Picker("Habit Value", selection: $addNewHabitViewModel.habitValue) {
+                        Picker("Habit Value", selection: $habitViewModel.habitValue) {
                             ForEach(1...10, id: \.self) { value in
                                 Text("\(value)").tag(value)
                             }
@@ -48,19 +48,19 @@ struct AddNewHabitView: View {
                     }
                     Spacer()
                     Button {
-                        addNewHabitViewModel.addHabit()
+                        habitViewModel.addHabit()
                     } label: {
                         Text("Add your new habit")
                             .font(.system(size: 25))
                             .frame(maxWidth: .infinity, minHeight: 50)
-                            .background(addNewHabitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? Color.green : Color.neutralElement)
+                            .background(habitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? Color.green : Color.neutralElement)
                             .foregroundStyle(Color.white)
                             .cornerRadius(10)
                             .padding(.vertical, 20)
                     }
                     .padding(.top, 40)
-                    .disabled(addNewHabitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? false : true)
-                    .alert(addNewHabitViewModel.errorMessage, isPresented: $addNewHabitViewModel.isError) {
+                    .disabled(habitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? false : true)
+                    .alert(habitViewModel.errorMessage, isPresented: $habitViewModel.isError) {
                         Button("OK", role: .cancel) {}
                     }
                 }
