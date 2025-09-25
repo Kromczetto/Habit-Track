@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BottomMenuView: View {
     @State private var index: Int = 0
+    @Environment(\.modelContext) private var modelContext
+    @StateObject var addNewHabitViewModel: AddNewHabitViewModel
+    
+    init(modelContext: ModelContext) {
+        _addNewHabitViewModel = StateObject(wrappedValue: AddNewHabitViewModel(modelContext: modelContext))
+    }
     
     var body: some View {
         TabView(selection: $index) {
             NavigationView {
-                HomeView()
+                HomeView(addNewHabitViewModel: addNewHabitViewModel)
                     .navigationBarBackButtonHidden(true)
             }
             .tabItem {
@@ -21,7 +28,7 @@ struct BottomMenuView: View {
             }
             .tag(0)
             NavigationView {
-                AddNewHabitView()
+                AddNewHabitView(addNewHabitViewModel: addNewHabitViewModel)
                     .navigationBarBackButtonHidden(true)
             }
             .tabItem {
@@ -38,8 +45,4 @@ struct BottomMenuView: View {
             .tag(2)
         }
     }
-}
-
-#Preview {
-    BottomMenuView()
 }

@@ -6,17 +6,35 @@
 //
 
 import Foundation
+import SwiftData
 
 class AddNewHabitViewModel: ObservableObject {
     @Published var habitName: String = ""
     @Published var habitValue: Int = 1
     @Published var errorMessage: String = ""
     @Published var isError: Bool = false
+
+    var habits = [Habit]()
     
-    func addHabit() {
+    init(modelContext: ModelContext) {
+        fetchData(modelContext: modelContext)
+    }
+    
+    func fetchData(modelContext: ModelContext) {
+        do {
+            let descriptor = FetchDescriptor<Habit>(sortBy: [SortDescriptor(\.habitName)])
+            habits = try modelContext.fetch(descriptor)
+            print("We have some habits")
+        } catch {
+            print("Problem with fetching data")
+        }
+    }
+    
+    func addHabit(modelContext: ModelContext) {
         if isHabitNameCorrect() {
-            //Swift data
-            
+            let habit = Habit(habitName: self.habitName, habitValue: self.habitValue)
+            modelContext.insert(habit)
+            fetchData(modelContext: modelContext)
             habitName = ""
             habitValue = 1
             print("Adding habit :)")
@@ -56,4 +74,5 @@ class AddNewHabitViewModel: ObservableObject {
         let allowedCharacters = CharacterSet.alphanumerics.union(.whitespaces)
         return input.rangeOfCharacter(from: allowedCharacters.inverted) != nil ? true : false
     }
+    
 }

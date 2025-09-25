@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddNewHabitView: View {
-    @StateObject var addNewHabitViewModel = AddNewHabitViewModel()
+    @Environment(\.modelContext) private var modelContext
+    @StateObject var addNewHabitViewModel: AddNewHabitViewModel
     
     var body: some View {
         ZStack {
@@ -46,7 +48,7 @@ struct AddNewHabitView: View {
                     }
                     Spacer()
                     Button {
-                        addNewHabitViewModel.addHabit()
+                        addNewHabitViewModel.addHabit(modelContext: modelContext)
                     } label: {
                         Text("Add your new habit")
                             .font(.system(size: 25))
@@ -70,6 +72,4 @@ struct AddNewHabitView: View {
     }
 }
 
-#Preview {
-    AddNewHabitView()
-}
+
