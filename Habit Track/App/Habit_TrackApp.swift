@@ -21,7 +21,6 @@ struct Habit_TrackApp: App {
     
     init() {
         do {
-            //let config = ModelConfiguration(isStoredInMemoryOnly: false)
             container = try ModelContainer(for: Habit.self)
         } catch {
             fatalError("Problem with creating ModelContainer")

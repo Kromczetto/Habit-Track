@@ -13,33 +13,58 @@ class AddNewHabitViewModel: ObservableObject {
     @Published var habitValue: Int = 1
     @Published var errorMessage: String = ""
     @Published var isError: Bool = false
-
-    var habits = [Habit]()
+    @Published var habits: [Habit] = []
+    
+    var modelContext: ModelContext
     
     init(modelContext: ModelContext) {
-        fetchData(modelContext: modelContext)
+        self.modelContext = modelContext
+        fetchData()
     }
     
-    func fetchData(modelContext: ModelContext) {
+    func fetchData() {
         do {
             let descriptor = FetchDescriptor<Habit>(sortBy: [SortDescriptor(\.habitName)])
             habits = try modelContext.fetch(descriptor)
             print("We have some habits")
+            for i in habits {
+                print(i.habitName)
+            }
         } catch {
             print("Problem with fetching data")
         }
     }
     
-    func addHabit(modelContext: ModelContext) {
+    func addHabit() {
         if isHabitNameCorrect() {
             let habit = Habit(habitName: self.habitName, habitValue: self.habitValue)
             modelContext.insert(habit)
-            fetchData(modelContext: modelContext)
+            do {
+               try modelContext.save()
+               fetchData()
+            } catch {
+               print("Problem with saving context: \(error)")
+            }
             habitName = ""
             habitValue = 1
             print("Adding habit :)")
         } else {
             print("There is an error \(isError)")
+        }
+    }
+    
+    func deleteHabit(at offsets: IndexSet) {
+        let toDelete = offsets.map { habits[$0] }
+                
+        for habit in toDelete {
+            modelContext.delete(habit)
+        }
+        
+        do {
+            try modelContext.save()
+            fetchData()
+        } catch {
+            print("Problem with saving context after delete: \(error)")
         }
     }
     

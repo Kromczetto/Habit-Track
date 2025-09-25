@@ -9,8 +9,8 @@ import Foundation
 import SwiftData
 
 @Model
-class Habit {
-    var habitName: String
+class Habit {    
+    @Attribute(.unique) var habitName: String
     var habitValue: Int
     
     init(habitName: String, habitValue: Int) {

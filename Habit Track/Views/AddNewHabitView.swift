@@ -48,7 +48,7 @@ struct AddNewHabitView: View {
                     }
                     Spacer()
                     Button {
-                        addNewHabitViewModel.addHabit(modelContext: modelContext)
+                        addNewHabitViewModel.addHabit()
                     } label: {
                         Text("Add your new habit")
                             .font(.system(size: 25))
