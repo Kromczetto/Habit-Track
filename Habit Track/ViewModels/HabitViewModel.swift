@@ -69,6 +69,10 @@ class HabitViewModel: ObservableObject {
     }
     
     private func isHabitNameCorrect() -> Bool {
+        if !checkIsNameFree() {
+            habitName = ""
+            return false
+        }
         if habitName.trimmingCharacters(in: .whitespaces).count > 3 &&
             habitName.trimmingCharacters(in: .whitespaces).count < 50 {
             errorMessage = ""
@@ -93,6 +97,18 @@ class HabitViewModel: ObservableObject {
             }
         }
         return false
+    }
+    
+    private func checkIsNameFree() -> Bool {
+        let clearedName = habitName.trimmingCharacters(in: .whitespaces).lowercased()
+        for habit in habits {
+            if habit.habitName.lowercased() == clearedName {
+                isError = true
+                errorMessage = "Habit name already exists"
+                return false
+            }
+        }
+        return true
     }
     
     private func containsSpecialCharacter(_ input: String) -> Bool {

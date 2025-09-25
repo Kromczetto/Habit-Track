@@ -24,9 +24,13 @@ struct HomeView: View {
                     .padding(.top, 80)
                 List {
                     if habitViewModel.habits.isEmpty {
-                        Text("You do not have any habits yet")
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.secondaryText)
+                        VStack {
+                            Text("You do not have any habits yet")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(Color.secondaryText)
+                        }
+                        .background(Color.backgroundMain)
+                        .listRowBackground(Color.backgroundMain)
                     } else {
                         ForEach(habitViewModel.habits, id: \.self) { habit in
                             HStack {
