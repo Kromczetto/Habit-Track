@@ -11,6 +11,7 @@ import SwiftData
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var habitViewModel: HabitViewModel
+    @State private var check: Bool = false
     
     var body: some View {
         ZStack {
@@ -34,6 +35,12 @@ struct HomeView: View {
                     } else {
                         ForEach(habitViewModel.habits, id: \.self) { habit in
                             HStack {
+                                Button {
+                                    habitViewModel.toggleCheck(for: habit)
+                                } label: {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(habit.check ? .green : .gray)
+                                }
                                 Text(habit.habitName)
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondaryText)

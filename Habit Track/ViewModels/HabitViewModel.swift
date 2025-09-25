@@ -37,7 +37,7 @@ class HabitViewModel: ObservableObject {
     
     func addHabit() {
         if isHabitNameCorrect() {
-            let habit = Habit(habitName: self.habitName, habitValue: self.habitValue)
+            let habit = Habit(habitName: self.habitName, habitValue: self.habitValue, check: false)
             modelContext.insert(habit)
             do {
                try modelContext.save()
@@ -50,6 +50,13 @@ class HabitViewModel: ObservableObject {
             print("Adding habit :)")
         } else {
             print("There is an error \(isError)")
+        }
+    }
+    
+    func toggleCheck(for habit: Habit) {
+        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
+            habits[index].check.toggle()
+            try? modelContext.save()
         }
     }
     
