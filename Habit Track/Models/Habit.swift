@@ -13,6 +13,9 @@ class Habit {
     @Attribute(.unique) var habitName: String
     var habitValue: Int
     var check: Bool = false
+    var totalDay: Int = 0
+    var lastCheckedDate: Date?
+    var stats: [Date: Bool] = [:]
     
     init(habitName: String, habitValue: Int, check: Bool = false) {
         self.habitName = habitName

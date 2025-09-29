@@ -36,7 +36,10 @@ struct HomeView: View {
                         ForEach(habitViewModel.habits, id: \.self) { habit in
                             HStack {
                                 Button {
-                                    habitViewModel.toggleCheck(for: habit)
+                                    if HabitTrackerViewModel.markAsDone(habit) {
+                                       try? modelContext.save()
+                                       habitViewModel.fetchData()
+                                   }
                                 } label: {
                                     Image(systemName: "checkmark.circle.fill")
                                         .foregroundColor(habit.check ? .green : .gray)

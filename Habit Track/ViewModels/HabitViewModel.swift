@@ -24,12 +24,16 @@ class HabitViewModel: ObservableObject {
     
     func fetchData() {
         do {
-            let descriptor = FetchDescriptor<Habit>(sortBy: [SortDescriptor(\.habitName)])
+            let descriptor = FetchDescriptor<Habit>(sortBy: [SortDescriptor(\.habitValue)])
             habits = try modelContext.fetch(descriptor)
-            print("We have some habits")
-            for i in habits {
-                print(i.habitName)
+            
+            let today = Calendar.current.startOfDay(for: Date())
+            for habit in habits {
+                if habit.lastCheckedDate != today {
+                    habit.check = false
+                }
             }
+            print("We have some habits")
         } catch {
             print("Problem with fetching data")
         }
