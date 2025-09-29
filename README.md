@@ -1,35 +1,62 @@
 # Habit Track
 
-## Overview
-Habit Track is an iOS application designed to help users build, prioritize, and maintain positive routines. Each habit is assigned a numerical value representing its priority. At the end of each day, completed habits are summed into a daily score that reflects how effectively the user focused on their most important goals.
+**Habit Track** is an iOS application designed to help users build, prioritize, and maintain positive routines. Each habit is assigned a numerical value representing its priority. At the end of each day, completed habits are summed into a daily score that reflects how effectively the user focused on their most important goals.
 
-The app goes beyond basic habit tracking by offering reminders, goal setting, and detailed statistics to support consistency and motivation over time.
+The app goes beyond basic habit tracking by offering streaks, weighted habits, and visual statistics to support consistency and motivation over time.
+
+---
 
 ## Features
-- Add, edit, and delete habits  
-- Assign a priority score to each habit  
-- Daily summary showing the total score of completed habits  
-- Statistics in daily, weekly, and monthly views  
-- Calendar view to track habit history  
-- Customizable reminders for each habit  
-- Weekly and monthly goal setting with progress tracking  
-- Motivational badges and achievements  
-- iCloud synchronization for secure backups  
-- Export data to CSV or PDF  
 
-## Why Habit Track?
-Unlike simple checklists, Habit Track highlights the importance of habits by prioritizing them with weighted scores. This helps users focus on what truly matters while still maintaining a clear overview of their overall progress.
+- **Add, edit, and delete habits**
+- **Assign a priority score (weight)** to each habit
+- **Daily summary** showing the total score of completed habits
+- **Streak tracking**: consecutive execution of habits, reset if a day is missed
+- **Statistics** with pie charts showing streaks of top habits
+- **Daily view** with list of habits completed today
+- **Interactive checkmarks** to mark habits as done once per day
+- **iCloud synchronization** for secure backups (planned)
+- **Export data** to CSV or PDF (planned)
 
-## Technical Requirements
-- iOS 16 or later  
-- Built with SwiftUI and Combine  
+---
 
-## Future Plans
-- Apple Health integration for health-related habits  
-- Social progress sharing with friends  
-- Smart recommendations for habit improvements  
+## How It Works
+
+1. **Adding a Habit:**  
+   - Enter habit name and assign a priority score (weight).  
+   - Habit is saved and appears in the main list.
+
+2. **Completing Habits:**  
+   - Tap the checkmark next to a habit to mark it as done for the day.  
+   - A habit can be completed **only once per day**.  
+   - Completed habits contribute their **weight** to the daily score.
+
+3. **Streaks:**  
+   - Streaks track consecutive days a habit has been completed.  
+   - Missing a day resets the streak to zero.  
+   - Pie charts visualize streaks for top habits, with “Other” representing remaining habits.
+
+4. **Statistics & Daily Summary:**  
+   - Pie chart shows top 5 habits by streak.  
+   - Daily summary shows total completed weight and list of habits done today.
+
+---
+
+## Technical Details
+
+- **Platform:** iOS 16+  
+- **Language:** Swift  
+- **UI Framework:** SwiftUI  
+- **Data Storage:** SwiftData  
+- **Architecture:** MVVM 
+- **Charts:** Swift Charts
+
+---
 
 ## Installation
-1. Clone the repository  
-2. Open the project in Xcode  
-3. Build and run on a device or simulator running iOS 16 or later
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/HabitTrack.git
+cd HabitTrack
