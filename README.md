@@ -11,6 +11,7 @@ The app goes beyond basic habit tracking by offering streaks, weighted habits, a
 - **Add, edit, and delete habits**
 - **Assign a priority score (weight)** to each habit
 - **Daily summary** showing the total score of completed habits
+- **Habit notifications
 - **Streak tracking**: consecutive execution of habits, reset if a day is missed
 - **Statistics** with pie charts showing streaks of top habits
 - **Daily view** with list of habits completed today
