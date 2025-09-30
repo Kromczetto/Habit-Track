@@ -42,4 +42,23 @@ class HabitTrackerViewModel {
         return count
     }
     
+    static func currentStreak(_ habit: Habit) -> Int {
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: Date())
+            
+            var streak = 0
+            var day = today
+            
+            while let done = habit.stats[day], done {
+                streak += 1
+                if let previousDay = calendar.date(byAdding: .day, value: -1, to: day) {
+                    day = previousDay
+                } else {
+                    break
+                }
+            }
+            
+            return streak
+        }
+    
 }

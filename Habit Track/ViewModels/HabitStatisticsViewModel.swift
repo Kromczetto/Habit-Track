@@ -18,7 +18,7 @@ class HabitStatisticsViewModel: ObservableObject {
     
     func topHabitsWithOther() -> [HabitPieItem] {
         let sortedHabits = habitViewModel.habits
-            .map { ($0.habitName, HabitTrackerViewModel.countCompletedDays($0, inLast: 30)) }
+            .map { ($0.habitName, HabitTrackerViewModel.currentStreak($0)) }
             .sorted { $0.1 > $1.1 }
         
         var result: [HabitPieItem] = []
@@ -55,4 +55,5 @@ class HabitStatisticsViewModel: ObservableObject {
     func totalPossibleDays() -> Int {
         habitViewModel.habits.count * 30
     }
+    
 }
