@@ -13,6 +13,7 @@ struct Habit_TrackApp: App {
     let container: ModelContainer
     
     init() {
+        NotificationViewModel.askNotificationPersmission()
         do {
             container = try ModelContainer(for: Habit.self)
         } catch {

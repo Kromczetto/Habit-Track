@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import UserNotifications
 
 struct ProfileView: View {
     @State private var habitCounter: Int = 0
