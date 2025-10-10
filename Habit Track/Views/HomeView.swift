@@ -33,7 +33,7 @@ struct HomeView: View {
                         .background(Color.backgroundMain)
                         .listRowBackground(Color.backgroundMain)
                     } else {
-                        ForEach(habitViewModel.habits, id: \.self) { habit in
+                        ForEach(habitViewModel.habits, id: \.id) { habit in
                             HStack {
                                 Button {
                                     if HabitTrackerViewModel.markAsDone(habit) {
@@ -60,6 +60,9 @@ struct HomeView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .background(Color.backgroundMain)
+                .onAppear {
+                    habitViewModel.fetchData()
+                }
             }
         }
     }

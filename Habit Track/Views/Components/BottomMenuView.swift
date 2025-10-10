@@ -36,7 +36,7 @@ struct BottomMenuView: View {
             }
             .tag(1)
             NavigationView {
-                ProfileView()
+                ProfileView(habitViewModel: habitViewModel)
                     .navigationBarBackButtonHidden(true)
             }
             .tabItem {
