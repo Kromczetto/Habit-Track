@@ -39,5 +39,18 @@ class HabitTrackerViewModel {
 
        return false
    }
-    
+   
+    static func checkBreakStreak(_ habit: Habit) -> Bool {
+        let today = Calendar.current.startOfDay(for: Date())
+        let calendar  = Calendar.current
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+        
+        guard let lastDate = habit.lastCheckedDate else {
+            return true
+        }
+        
+        let lastCheckedDay = calendar.startOfDay(for: lastDate)
+        
+        return lastDate < yesterday ? true : false
+    }
 }

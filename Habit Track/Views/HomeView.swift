@@ -62,6 +62,14 @@ struct HomeView: View {
                 .background(Color.backgroundMain)
                 .onAppear {
                     habitViewModel.fetchData()
+                    for habit in habitViewModel.habits {
+                        if HabitTrackerViewModel.checkBreakStreak(habit) {
+                            habit.totalDay = 0
+                            try? modelContext.save()
+                            habitViewModel.fetchData()
+                
+                        }
+                    }
                 }
             }
         }
