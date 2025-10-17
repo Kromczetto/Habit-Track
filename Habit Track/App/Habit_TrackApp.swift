@@ -25,6 +25,7 @@ struct Habit_TrackApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(container)
+                .preferredColorScheme(.light)
         }
     }
 }

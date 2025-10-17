@@ -14,10 +14,6 @@ class HabitTrackerViewModel {
         let today = Calendar.current.startOfDay(for: Date())
         
         if habit.lastCheckedDate != today {
-            habit.check = false
-        }
-        
-        if habit.lastCheckedDate != today {
             habit.totalDay += 1
             habit.lastCheckedDate = today
             habit.stats[today] = true
@@ -29,36 +25,19 @@ class HabitTrackerViewModel {
         return false
     }
     
-    static func countCompletedDays(_ habit: Habit, inLast days: Int ) -> Int {
-        let today = Calendar.current.startOfDay(for: Date())
-        var count = 0
-        
-        for i in 0..<days {
-            let date = Calendar.current.date(byAdding: .day, value: -i, to: today)!
-            if habit.stats[date] == true {
-                count += 1
-            }
-        }
-        return count
-    }
-    
-    static func currentStreak(_ habit: Habit) -> Int {
-            let calendar = Calendar.current
-            let today = calendar.startOfDay(for: Date())
-            
-            var streak = 0
-            var day = today
-            
-            while let done = habit.stats[day], done {
-                streak += 1
-                if let previousDay = calendar.date(byAdding: .day, value: -1, to: day) {
-                    day = previousDay
-                } else {
-                    break
-                }
-            }
-            
-            return streak
-        }
+    static func remainder(_ habit: Habit) -> Bool {
+       guard let lastDate = habit.lastCheckedDate else {
+           return true
+       }
+
+       let now = Date()
+       let calendar = Calendar.current
+
+       if let hours = calendar.dateComponents([.hour], from: lastDate, to: now).hour {
+           return hours >= 6
+       }
+
+       return false
+   }
     
 }

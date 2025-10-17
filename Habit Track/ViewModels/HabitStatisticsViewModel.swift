@@ -17,23 +17,21 @@ class HabitStatisticsViewModel: ObservableObject {
     }
     
     func topHabitsWithOther() -> [HabitPieItem] {
-        let sortedHabits = habitViewModel.habits
-            .map { ($0.habitName, HabitTrackerViewModel.currentStreak($0)) }
-            .sorted { $0.1 > $1.1 }
-        
+        let sortedHabits = habitViewModel.habits.sorted { $0.totalDay > $1.totalDay }
+
         var result: [HabitPieItem] = []
         var otherDays = 0
         
         for (index, habit) in sortedHabits.enumerated() {
             if index < 5 {
-                result.append(HabitPieItem(name: habit.0, days: habit.1, color: colors[index % colors.count]))
+                result.append(HabitPieItem(name: habit.habitName, days: habit.totalDay, color: colors[index % colors.count], check: habit.check))
             } else {
-                otherDays += habit.1
+                otherDays += habit.totalDay
             }
         }
         
         if otherDays > 0 {
-            result.append(HabitPieItem(name: "Other", days: otherDays, color: colors[5]))
+            result.append(HabitPieItem(name: "Other", days: otherDays, color: colors[5], check: false))
         }
         
         return result

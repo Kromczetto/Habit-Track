@@ -11,6 +11,13 @@ struct ProfileView: View {
     init(habitViewModel: HabitViewModel) {
         self.habitViewModel = habitViewModel
         self.habitStatisticsViewModel = HabitStatisticsViewModel(habitViewModel: habitViewModel)
+        
+        for habit in habitViewModel.habits {
+            if !habit.check && HabitTrackerViewModel.remainder(habit) {
+                NotificationViewModel.scheduleNotification()
+                break
+            }
+        }
     }
     
     var body: some View {
@@ -44,8 +51,10 @@ struct ProfileView: View {
                                 Circle()
                                     .fill(item.color)
                                     .frame(width: 16, height: 16)
-                                    Text("\(item.name)\(item.name != "Other" ? ": \(item.days) 🔥" : "")")
+                                    Text("\(item.name)\(item.name != "Other" ? ": \(item.days)" : "")")
                                         .foregroundColor(.primary)
+                                    Image(systemName: "flame.fill")
+                                        .foregroundColor(item.check ? .orange : .gray)
                             }
                         }
                     }

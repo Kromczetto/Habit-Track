@@ -22,13 +22,13 @@ class NotificationViewModel {
     
     static func scheduleNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Hello, world!!!!"
-        content.subtitle = "This is a subtitle."
+        content.title = "You still have habits to complete!"
+        content.subtitle = "Keep improving every single day!"
         content.sound = UNNotificationSound.default
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10800, repeats: false)
         
-        let request = UNNotificationRequest(identifier: "test", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {

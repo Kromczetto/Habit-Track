@@ -12,4 +12,5 @@ struct HabitPieItem: Identifiable {
     let name: String
     let days: Int
     let color: Color
+    var check: Bool
 }
