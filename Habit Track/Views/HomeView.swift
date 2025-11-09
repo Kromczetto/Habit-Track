@@ -12,6 +12,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var habitViewModel: HabitViewModel
     @State private var check: Bool = false
+    @State private var showCalendar = false
     
     var body: some View {
         ZStack {
@@ -51,6 +52,17 @@ struct HomeView: View {
                                 Text("\(habit.habitValue)")
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondaryText)
+                                if habit.check {
+                                    Button() {
+                                        showCalendar.toggle()
+                                    } label: {
+                                        Image(systemName: "calendar")
+                                    }
+                                    .sheet(isPresented: $showCalendar) {
+                                        CalendarView()
+                                    }
+                                    .padding(.leading, 10)
+                                }
                             }
                             .listRowBackground(Color.backgroundMain)
                         }
@@ -62,15 +74,16 @@ struct HomeView: View {
                 .background(Color.backgroundMain)
                 .onAppear {
                     habitViewModel.fetchData()
+            
                     for habit in habitViewModel.habits {
                         if HabitTrackerViewModel.checkBreakStreak(habit) {
                             habit.totalDay = 0
                             try? modelContext.save()
                             habitViewModel.fetchData()
-                
                         }
                     }
                 }
+                CalendarView()
             }
         }
     }

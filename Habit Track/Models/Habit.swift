@@ -15,11 +15,12 @@ class Habit {
     var check: Bool = false
     var totalDay: Int = 0
     var lastCheckedDate: Date?
-    var stats: [Date: Bool] = [:]
+    var stats: [Date: Bool]
     
-    init(habitName: String, habitValue: Int, check: Bool = false) {
+    init(habitName: String, habitValue: Int, check: Bool = false, stats: [Date: Bool]) {
         self.habitName = habitName
         self.habitValue = habitValue
         self.check = check
+        self.stats = stats
     }
 }

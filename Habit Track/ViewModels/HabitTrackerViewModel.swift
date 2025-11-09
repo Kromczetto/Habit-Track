@@ -12,11 +12,13 @@ class HabitTrackerViewModel {
     
     static func markAsDone(_ habit: Habit) -> Bool {
         let today = Calendar.current.startOfDay(for: Date())
+        var calendar = habit.stats
         
         if habit.lastCheckedDate != today {
+            calendar[today] = true
             habit.totalDay += 1
             habit.lastCheckedDate = today
-            habit.stats[today] = true
+            habit.stats = calendar
             habit.check = true
             return true
         }
@@ -48,8 +50,6 @@ class HabitTrackerViewModel {
         guard let lastDate = habit.lastCheckedDate else {
             return true
         }
-        
-        let lastCheckedDay = calendar.startOfDay(for: lastDate)
         
         return lastDate < yesterday ? true : false
     }

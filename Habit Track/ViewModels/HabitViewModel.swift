@@ -41,7 +41,7 @@ class HabitViewModel: ObservableObject {
     
     func addHabit() {
         if isHabitNameCorrect() {
-            let habit = Habit(habitName: self.habitName, habitValue: self.habitValue, check: false)
+            let habit = Habit(habitName: self.habitName, habitValue: self.habitValue, check: false, stats: [Date(): true])
             modelContext.insert(habit)
             do {
                try modelContext.save()
