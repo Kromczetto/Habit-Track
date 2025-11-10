@@ -59,7 +59,7 @@ struct HomeView: View {
                                         Image(systemName: "calendar")
                                     }
                                     .sheet(isPresented: $showCalendar) {
-                                        CalendarView()
+                                        CalendarView(checkDays: habit.stats)
                                     }
                                     .padding(.leading, 10)
                                 }
@@ -83,7 +83,6 @@ struct HomeView: View {
                         }
                     }
                 }
-                CalendarView()
             }
         }
     }

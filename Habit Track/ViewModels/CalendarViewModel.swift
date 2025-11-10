@@ -66,4 +66,26 @@ class CalendarViewModel {
         
         return days
     }
+    
+    static func hasHabitBeenDone(_ date: Date, _ diary: [Date: Bool]) -> Bool {
+        guard date < Date() else {
+            print("Future date cannot be checked")
+            return false
+        }
+        
+        for (key, value) in diary {
+            if Calendar.current.isDate(date, inSameDayAs: key) {
+                return value
+            }
+        }
+        
+        return false
+    }
+    
+    static func isTheSameDay(_ firstDate: Date, _ secondDate: Date) -> Bool {
+        if Calendar.current.isDate(firstDate, inSameDayAs: secondDate) {
+            return true
+        }
+        return false
+    }
 }
