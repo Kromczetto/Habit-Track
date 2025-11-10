@@ -100,6 +100,17 @@ struct CalendarView: View {
             Spacer()
         }
         .padding(25)
+        .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded({ value in
+                if value.translation.width < 0 {
+                    currentMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth)!
+                    days = CalendarViewModel.displayCalendar(currentMonth)
+                }
+                if value.translation.width > 0 {
+                    currentMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth)!
+                    days = CalendarViewModel.displayCalendar(currentMonth)
+                }
+            }))
     }
         
 }
