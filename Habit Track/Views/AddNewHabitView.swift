@@ -11,6 +11,7 @@ import SwiftData
 struct AddNewHabitView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var habitViewModel: HabitViewModel
+    @FocusState private var isTextFieldFocus: Bool
     
     var body: some View {
         ZStack {
@@ -34,6 +35,7 @@ struct AddNewHabitView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.gray, lineWidth: 2)
                             )
+                        .focused($isTextFieldFocus)
                     HStack {
                         Text("Value of the habit")
                             .fontWeight(.semibold)
@@ -49,6 +51,7 @@ struct AddNewHabitView: View {
                     Spacer()
                     Button {
                         habitViewModel.addHabit()
+                        isTextFieldFocus = false
                     } label: {
                         Text("Add your new habit")
                             .font(.system(size: 25))
@@ -68,6 +71,9 @@ struct AddNewHabitView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 Spacer()
             }
+        }
+        .onTapGesture {
+            isTextFieldFocus = false
         }
     }
 }
