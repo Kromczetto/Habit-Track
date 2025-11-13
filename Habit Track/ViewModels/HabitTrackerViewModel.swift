@@ -13,18 +13,22 @@ class HabitTrackerViewModel {
     static func markAsDone(_ habit: Habit) -> Bool {
         let today = Calendar.current.startOfDay(for: Date())
         var calendar = habit.stats
-        
-        if habit.lastCheckedDate != today {
-            calendar[today] = true
-            habit.totalDay += 1
+
+        if habit.lastCheckedDate == today && habit.check == true {
+            calendar[today] = false
+            habit.totalDay = max(habit.totalDay - 1, 0)
             habit.lastCheckedDate = today
             habit.stats = calendar
-            habit.check = true
-            return true
+            habit.check = false
+            return false
         }
-        
-        print("You make this habit today")
-        return false
+
+        calendar[today] = true
+        habit.totalDay += 1
+        habit.lastCheckedDate = today
+        habit.stats = calendar
+        habit.check = true
+        return true 
     }
     
     static func remainder(_ habit: Habit) -> Bool {

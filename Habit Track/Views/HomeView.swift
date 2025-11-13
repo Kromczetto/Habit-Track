@@ -60,6 +60,7 @@ struct HomeView: View {
                                     } label: {
                                         Image(systemName: "calendar")
                                     }
+                                    .buttonStyle(.plain)
                                     .sheet(isPresented: $showCalendar) {
                                         CalendarView(checkDays: habit.stats)
                                     }
