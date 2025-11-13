@@ -33,9 +33,7 @@ struct ProfileView: View {
                         .foregroundColor(.secondary)
                         .padding(.top, 40)
                     Spacer()
-                    Button {
-                        print("Settings")
-                    } label: {
+                    NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gearshape")
                             .font(.system(size: 24))
                             .foregroundColor(.black)
