@@ -12,11 +12,35 @@ struct AddNewHabitView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var habitViewModel: HabitViewModel
     @FocusState private var isTextFieldFocus: Bool
+ 
+    @State private var showFeedback = false
+    @State private var feedbackColor = Color.green
+    @State private var feedbackOffset = CGSize.zero
+    @State private var feedbackOpacity = 0.5
+    @State private var feedbackScale: CGFloat = 1.0
     
     var body: some View {
         ZStack {
             Color.backgroundMain
                 .ignoresSafeArea()
+            
+            if showFeedback {
+              ZStack {
+                  Circle()
+                      .fill(feedbackColor)
+                      .frame(width: 80, height: 80)
+                  
+                  Image(systemName: "checkmark")
+                      .font(.system(size: 35, weight: .bold))
+                      .foregroundColor(.white)
+              }
+              .scaleEffect(feedbackScale)
+              .offset(feedbackOffset)
+              .opacity(feedbackOpacity)
+              .transition(.scale.combined(with: .opacity))
+              .animation(.easeInOut(duration: 0.4), value: showFeedback)
+          }
+            
             VStack {
                 Text("Add your new habit")
                     .font(.largeTitle)
@@ -52,6 +76,9 @@ struct AddNewHabitView: View {
                     Button {
                         habitViewModel.addHabit()
                         isTextFieldFocus = false
+                        if !habitViewModel.isError {
+                            triggerFeedbackAnimation()
+                        }
                     } label: {
                         Text("Add your new habit")
                             .font(.system(size: 25))
@@ -76,6 +103,35 @@ struct AddNewHabitView: View {
             isTextFieldFocus = false
         }
     }
+    
+    private func triggerFeedbackAnimation() {
+           feedbackColor = .green
+           feedbackOffset = .zero
+           feedbackOpacity = 1.0
+           feedbackScale = 1.0
+           
+           withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
+               showFeedback = true
+           }
+
+           DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+               withAnimation(.easeInOut(duration: 0.5)) {
+                   feedbackColor = .gray
+               }
+           }
+           
+           DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+               withAnimation(.easeInOut(duration: 0.8)) {
+                   feedbackOffset = CGSize(width: -130, height: 400)
+                   feedbackOpacity = 0.0
+                   feedbackScale = 0.4
+               }
+           }
+
+           DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
+               showFeedback = false
+           }
+       }
 }
 
 

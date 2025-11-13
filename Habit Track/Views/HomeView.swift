@@ -11,6 +11,7 @@ import SwiftData
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject var habitViewModel: HabitViewModel
+    
     @State private var check: Bool = false
     @State private var showCalendar = false
     
@@ -18,6 +19,7 @@ struct HomeView: View {
         ZStack {
             Color.backgroundMain
                 .ignoresSafeArea()
+            
             VStack {
                 Text("Built your habit every day")
                     .font(.largeTitle)
