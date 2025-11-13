@@ -127,4 +127,23 @@ class HabitViewModel: ObservableObject {
         return input.rangeOfCharacter(from: allowedCharacters.inverted) != nil ? true : false
     }
     
+    func getLast30DaysSummary() -> [DailyHabitSummary] {
+        var result: [DailyHabitSummary] = []
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        for i in 0..<30 {
+            if let date = calendar.date(byAdding: .day, value: -i, to: today) {
+                var totalValue = 0
+                for habit in habits {
+                    if habit.stats[date] == true {
+                        totalValue += habit.habitValue
+                    }
+                }
+                result.append(DailyHabitSummary(date: date, totalValue: totalValue))
+            }
+        }
+        
+        return result.sorted(by: { $0.date < $1.date })
+    }
 }
