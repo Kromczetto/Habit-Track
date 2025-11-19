@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@%@" : {
       "localizations" : {
         "en" : {
@@ -163,6 +166,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nazwa nawyku"
+          }
+        }
+      }
+    },
+    "Habit name already exists" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nombre del hábito ya existe"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa nawyku już istnieje"
+          }
+        }
+      }
+    },
+    "Habit name can not contain special characters" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nombre del hábito no puede contener caracteres especiales"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa nawyku nie może zawierać znaków specjalnych"
+          }
+        }
+      }
+    },
+    "Habit name must be longer than 3 characters" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nombre del hábito debe tener más de 3 caracteres"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa nawyku musi mieć więcej niż 3 znaki"
+          }
+        }
+      }
+    },
+    "Habit name must be shorter than 50 characters" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nombre del hábito debe tener menos de 50 caracteres"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa nawyku musi mieć mniej niż 50 znaków"
           }
         }
       }

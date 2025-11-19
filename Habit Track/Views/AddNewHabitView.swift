@@ -93,6 +93,7 @@ struct AddNewHabitView: View {
                     .alert(habitViewModel.errorMessage, isPresented: $habitViewModel.isError) {
                         Button("OK", role: .cancel) {}
                     }
+
                 }
                 .padding(50)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

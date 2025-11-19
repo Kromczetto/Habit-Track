@@ -7,11 +7,23 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
+
+private enum ErrorMessage: String {
+    case nameTooShort = "Habit name must be longer than 3 characters"
+    case nameTooLong = "Habit name must be shorter than 50 characters"
+    case nameAlreadyExists = "Habit name already exists"
+    case specialCharactersNotAllowed = "Habit name can not contain special characters"
+    
+    var localized: LocalizedStringKey {
+        LocalizedStringKey(self.rawValue)
+    }
+}
 
 class HabitViewModel: ObservableObject {
     @Published var habitName: String = ""
     @Published var habitValue: Int = 1
-    @Published var errorMessage: String = ""
+    @Published var errorMessage: LocalizedStringKey = ""
     @Published var isError: Bool = false
     @Published var habits: [Habit] = []
     
@@ -90,7 +102,7 @@ class HabitViewModel: ObservableObject {
             isError = false
             if containsSpecialCharacter(habitName.trimmingCharacters(in: .whitespaces)) {
                 isError = true
-                errorMessage = "Habit name can not contain special characters"
+                errorMessage = ErrorMessage.specialCharactersNotAllowed.localized
                 return false
             } else {
                 isError = false
@@ -100,10 +112,10 @@ class HabitViewModel: ObservableObject {
         } else {
             if habitName.trimmingCharacters(in: .whitespaces).count <= 3 {
                 isError = true
-                errorMessage = "Habit name must be longer than 3 characters"
+                errorMessage = ErrorMessage.nameTooShort.localized
             } else {
                 isError = true
-                errorMessage = "Habit name must be shorter than 50 characters"
+                errorMessage = ErrorMessage.nameTooLong.localized
                 habitName = ""
             }
         }
@@ -115,7 +127,7 @@ class HabitViewModel: ObservableObject {
         for habit in habits {
             if habit.habitName.lowercased() == clearedName {
                 isError = true
-                errorMessage = "Habit name already exists"
+                errorMessage = ErrorMessage.nameAlreadyExists.localized
                 return false
             }
         }
