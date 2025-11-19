@@ -11,12 +11,13 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var appLanguageManager: AppLanguageManager
     
-    @State private var languages = ["Polski", "English"]
-    @State private var selectedLanguage: String = "Polski"
+    @State private var languages = ["Polski", "English", "Spanish"]
+    @State private var selectedLanguage: String = "English"
     
     var languageCodes = [
         "Polski": "pl",
-        "English": "en"
+        "English": "en",
+        "Spanish": "es"
     ]
     
     var body: some View {

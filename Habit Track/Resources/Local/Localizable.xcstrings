@@ -9,6 +9,12 @@
             "value" : "%1$@%2$@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19,6 +25,12 @@
     },
     "%lld" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29,6 +41,12 @@
     },
     "Add" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -39,6 +57,12 @@
     },
     "Add your new habit" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade tu nuevo hábito"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49,6 +73,12 @@
     },
     "Back" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrás"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +89,12 @@
     },
     "Built your habit every day" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Construye tu hábito todos los días"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +105,12 @@
     },
     "Clear app data" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar datos de la app"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -79,6 +121,12 @@
     },
     "Day" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,6 +137,12 @@
     },
     "Days" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Días"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +153,12 @@
     },
     "Habit name" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del hábito"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,6 +169,12 @@
     },
     "Habit Value" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valor del hábito"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -119,6 +185,12 @@
     },
     "Home" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicio"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -130,6 +202,12 @@
     "Key" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llave"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -140,6 +218,12 @@
     },
     "Language:" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma:"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -150,6 +234,12 @@
     },
     "OK" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,6 +250,12 @@
     },
     "Profile" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -170,6 +266,12 @@
     },
     "Save changes" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar cambios"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -180,6 +282,12 @@
     },
     "Sum" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suma"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -190,6 +298,12 @@
     },
     "Summary of 30 days" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen de 30 días"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -200,16 +314,28 @@
     },
     "Today's Completed Weight: %lld" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peso completado de hoy: %lld"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suma dzisiejszych nawyków %lld"
+            "value" : "Suma dzisiejszych nawyków: %lld"
           }
         }
       }
     },
     "Top Habits" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hábitos principales"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -220,6 +346,12 @@
     },
     "Value of the habit" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valor del hábito"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -230,6 +362,12 @@
     },
     "You do not have any habits yet" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no tienes ningún hábito"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
