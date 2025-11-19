@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct Habit_TrackApp: App {
+    @StateObject private var appLanguageManager = AppLanguageManager()
     let container: ModelContainer
     
     init() {
@@ -26,6 +27,8 @@ struct Habit_TrackApp: App {
             ContentView()
                 .modelContainer(container)
                 .preferredColorScheme(.light)
+                .environment(\.locale, appLanguageManager.locale)
+                .environmentObject(appLanguageManager)
         }
     }
 }
