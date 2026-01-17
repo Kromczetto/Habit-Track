@@ -11,13 +11,6 @@ struct ProfileView: View {
     init(habitViewModel: HabitViewModel) {
         self.habitViewModel = habitViewModel
         self.habitStatisticsViewModel = HabitStatisticsViewModel(habitViewModel: habitViewModel)
-        
-        for habit in habitViewModel.habits {
-            if !habit.check && HabitTrackerViewModel.remainder(habit) {
-                NotificationViewModel.scheduleNotification()
-                break
-            }
-        }
     }
     
     var body: some View {
