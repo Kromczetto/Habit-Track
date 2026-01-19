@@ -19,6 +19,14 @@ struct Habit_TrackApp: App {
         } catch {
             fatalError("Problem with creating ModelContainer: \(error)")
         }
+        
+        NotificationManager.shared.requestPermission { granted in
+            if granted {
+                print("Notifications permission granted")
+            } else {
+                print("Notifications permission denied")
+            }
+        }
     }
     
     var body: some Scene {

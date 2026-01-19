@@ -17,10 +17,16 @@ class Habit {
     var lastCheckedDate: Date?
     var stats: [Date: Bool]
     
-    init(habitName: String, habitValue: Int, check: Bool = false, stats: [Date: Bool]) {
+    var reminderEnabled: Bool = false
+    var reminderTime: Date?
+    
+    init(habitName: String, habitValue: Int, check: Bool = false, stats: [Date: Bool],
+         reminderEnabled: Bool = false, reminderTime: Date? = nil) {
         self.habitName = habitName
         self.habitValue = habitValue
         self.check = check
         self.stats = stats
+        self.reminderEnabled = reminderEnabled
+        self.reminderTime = reminderTime
     }
 }
