@@ -14,6 +14,7 @@ struct HomeView: View {
     
     @State private var check: Bool = false
     @State private var showCalendar = false
+    @State private var showSwipeHint: Bool = true
     
     var body: some View {
         ZStack {
@@ -25,7 +26,20 @@ struct HomeView: View {
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.secondaryText)
-                    .padding(.top, 80)
+                    .padding(.top, 40)
+                
+                Spacer()
+                
+                if showSwipeHint {
+                    Text("Swipe item left to delete")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .transition(.opacity)
+                        .padding(.bottom, 4)
+                }
+                
+                Spacer()
+                
                 List {
                     if habitViewModel.habits.isEmpty {
                         VStack {
@@ -77,6 +91,12 @@ struct HomeView: View {
                 .background(Color.backgroundMain)
                 .onAppear {
                     habitViewModel.fetchData()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        withAnimation {
+                            showSwipeHint = false
+                        }
+                    }
             
                     for habit in habitViewModel.habits {
                         if HabitTrackerViewModel.checkBreakStreak(habit) {
@@ -86,6 +106,8 @@ struct HomeView: View {
                         }
                     }
                 }
+                
+                Spacer()
             }
         }
     }

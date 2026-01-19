@@ -383,6 +383,9 @@
         }
       }
     },
+    "Swipe item left to delete" : {
+
+    },
     "Today's Completed Weight: %lld" : {
       "localizations" : {
         "es" : {

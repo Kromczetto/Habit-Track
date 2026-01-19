@@ -24,13 +24,11 @@ struct ProfileView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.secondary)
-                        .padding(.top, 40)
+                        
                     Spacer()
-                    NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gearshape")
                             .font(.system(size: 24))
                             .foregroundColor(.black)
-                    }
                 }
                 .padding()
                 
