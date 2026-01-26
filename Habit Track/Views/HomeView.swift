@@ -13,7 +13,7 @@ struct HomeView: View {
     @StateObject var habitViewModel: HabitViewModel
     
     @State private var check: Bool = false
-    @State private var showCalendar = false
+    @State private var selectedHabitForCalendar: Habit? = nil
     @State private var showSwipeHint: Bool = true
     
     private let notificationManager = NotificationManager.shared
@@ -80,12 +80,12 @@ struct HomeView: View {
                                     .foregroundStyle(Color.secondaryText)
                                 if habit.check {
                                     Button() {
-                                        showCalendar.toggle()
+                                        selectedHabitForCalendar = habit
                                     } label: {
                                         Image(systemName: "calendar")
                                     }
                                     .buttonStyle(.plain)
-                                    .sheet(isPresented: $showCalendar) {
+                                    .sheet(item: $selectedHabitForCalendar) { habit in
                                         CalendarView(checkDays: habit.stats)
                                     }
                                     .padding(.leading, 10)

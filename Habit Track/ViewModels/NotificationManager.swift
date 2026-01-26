@@ -35,7 +35,7 @@ final class NotificationManager {
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: 6 * 60 * 60, // set to 6 * 60 * 60 for debbug purpouse 60s
+            timeInterval: 6 * 60 * 60, 
             repeats: false
         )
 
