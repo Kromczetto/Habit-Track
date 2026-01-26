@@ -16,6 +16,8 @@ struct HomeView: View {
     @State private var showCalendar = false
     @State private var showSwipeHint: Bool = true
     
+    private let notificationManager = NotificationManager.shared
+    
     var body: some View {
         ZStack {
             Color.backgroundMain
@@ -53,14 +55,22 @@ struct HomeView: View {
                         ForEach(habitViewModel.habits, id: \.id) { habit in
                             HStack {
                                 Button {
-                                    if HabitTrackerViewModel.markAsDone(habit) {
-                                       try? modelContext.save()
-                                       habitViewModel.fetchData()
-                                   }
+                                    let completed = HabitTrackerViewModel.markAsDone(habit)
+                                    try? modelContext.save()
+                                    habitViewModel.fetchData()
+
+                                    if completed {
+                                        notificationManager.scheduleStreakNotification(
+                                            habitName: habit.habitName,
+                                            streak: habit.totalDay
+                                        )
+                                    }
+                                    
                                 } label: {
                                     Image(systemName: "checkmark.circle.fill")
                                         .foregroundColor(habit.check ? .green : .gray)
                                 }
+                                
                                 Text(habit.habitName)
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondaryText)
@@ -91,6 +101,11 @@ struct HomeView: View {
                 .background(Color.backgroundMain)
                 .onAppear {
                     habitViewModel.fetchData()
+                    
+                    notificationManager.requestPermission()
+                    
+                    notificationManager.cancelDailyCompletionReminder()
+                    notificationManager.scheduleDailyCompletionReminder()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         withAnimation {

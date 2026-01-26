@@ -30,21 +30,6 @@ class HabitTrackerViewModel {
         habit.check = true
         return true 
     }
-    
-    static func remainder(_ habit: Habit) -> Bool {
-       guard let lastDate = habit.lastCheckedDate else {
-           return true
-       }
-
-       let now = Date()
-       let calendar = Calendar.current
-
-       if let hours = calendar.dateComponents([.hour], from: lastDate, to: now).hour {
-           return hours >= 6
-       }
-
-       return false
-   }
    
     static func checkBreakStreak(_ habit: Habit) -> Bool {
         let today = Calendar.current.startOfDay(for: Date())

@@ -19,9 +19,16 @@ class Habit {
     
     var reminderEnabled: Bool = false
     var reminderTime: Date?
+    var reminderID: String = UUID().uuidString
     
-    init(habitName: String, habitValue: Int, check: Bool = false, stats: [Date: Bool],
-         reminderEnabled: Bool = false, reminderTime: Date? = nil) {
+    init(
+        habitName: String,
+        habitValue: Int,
+        check: Bool = false,
+        stats: [Date: Bool],
+        reminderEnabled: Bool = false,
+        reminderTime: Date? = nil
+    ) {
         self.habitName = habitName
         self.habitValue = habitValue
         self.check = check
@@ -29,4 +36,5 @@ class Habit {
         self.reminderEnabled = reminderEnabled
         self.reminderTime = reminderTime
     }
+    
 }
