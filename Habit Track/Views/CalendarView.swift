@@ -16,13 +16,13 @@ struct CalendarView: View {
     private let formater = DateFormatter()
     @State var monthYearString: String = ""
     
-    
     let daysOfWeek = CalendarViewModel.capitalizedFirstLetterOfWeek()
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     
     var body: some View {
-        VStack {
-            Spacer()
+        
+        VStack(spacing: 16) {
+            
             HStack {
                 Text(monthYearString)
                     .foregroundColor(.blue)
@@ -38,7 +38,9 @@ struct CalendarView: View {
                     }
                 Spacer()
             }
-            Spacer()
+            .padding(.top, 10)
+            
+            
             HStack {
                 ForEach(daysOfWeek.indices, id: \.self) { index in
                     Text(daysOfWeek[index])
@@ -50,6 +52,8 @@ struct CalendarView: View {
                 days = CalendarViewModel.displayCalendar(Date.now)
             }
             
+            
+        
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(days, id: \.self) { day in
                     if day < currentDay && !CalendarViewModel.isTheSameDay(day, currentDay){
@@ -58,25 +62,28 @@ struct CalendarView: View {
                             .padding(6)
                             .frame(width: 35, height: 35)
                             .overlay(
-                              Circle()
-                                .stroke(Color.blue, lineWidth: CalendarViewModel.hasHabitBeenDone(day, checkDays) ? 2 : 0)
-                          )
+                                Circle()
+                                    .stroke(Color.blue, lineWidth: CalendarViewModel.hasHabitBeenDone(day, checkDays) ? 2 : 0)
+                            )
                     } else {
                         Text(day, format: . dateTime.day())
                             .foregroundColor(.black)
                             .padding(6)
                             .frame(width: 35, height: 35)
                             .overlay(
-                              Circle()
-                                .stroke(Color.blue, lineWidth: CalendarViewModel.hasHabitBeenDone(day, checkDays) ? 2 : 0)
-                          )
+                                Circle()
+                                    .stroke(Color.blue, lineWidth: CalendarViewModel.hasHabitBeenDone(day, checkDays) ? 2 : 0)
+                            )
                     }
                 }
             }
-            .frame(height: 350, alignment: .top)
+            .frame(maxHeight: 350) // ✅ ZMIANA (było height: 350)
             
-            Spacer()
             
+            Spacer() // ✅ zostawiony tylko jeden (na dole)
+            
+            
+            // 🔥 NAWIGACJA MIESIĘCY (bez zmian)
             HStack {
                 Spacer()
                 Button {
@@ -96,10 +103,10 @@ struct CalendarView: View {
                 }
                 Spacer()
             }
-            
-            Spacer()
         }
         .padding(25)
+        
+        // 🔥 SWIPE (bez zmian)
         .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onEnded({ value in
                 if value.translation.width < 0 {
@@ -112,7 +119,6 @@ struct CalendarView: View {
                 }
             }))
     }
-        
 }
 
 #Preview {

@@ -4,7 +4,6 @@
 //
 //  Created by Kuba Kromołowski on 18/09/2025.
 //
-
 import SwiftUI
 import SwiftData
 
@@ -14,7 +13,6 @@ struct HomeView: View {
     
     @StateObject var habitViewModel: HabitViewModel
     
-    @State private var check: Bool = false
     @State private var selectedHabitForCalendar: Habit? = nil
     @State private var showSwipeHint: Bool = true
     
@@ -33,7 +31,10 @@ struct HomeView: View {
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.secondaryText)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6) 
                     .padding(.top, 40)
+                    .padding(.horizontal)
                 
                 Spacer()
                 
@@ -48,26 +49,23 @@ struct HomeView: View {
                 Spacer()
                 
                 List {
-                    if showTooltip {
-                        Text("Premium feature")
-                           .padding(8)
-                           .background(Color.black.opacity(0.8))
-                           .foregroundColor(.white)
-                           .cornerRadius(8)
-                           .transition(.opacity)
-                    }
-                    
                     if habitViewModel.habits.isEmpty {
-                        VStack {
+                        HStack {
+                            Spacer()
                             Text("You do not have any habits yet")
                                 .fontWeight(.semibold)
                                 .foregroundStyle(Color.secondaryText)
+                                .padding()
+                            Spacer()
                         }
                         .background(Color.backgroundMain)
                         .listRowBackground(Color.backgroundMain)
                     } else {
                         ForEach(habitViewModel.habits, id: \.id) { habit in
+                            
+
                             HStack {
+                     
                                 Button {
                                     let completed = HabitTrackerViewModel.markAsDone(habit)
                                     try? modelContext.save()
@@ -79,16 +77,18 @@ struct HomeView: View {
                                             streak: habit.totalDay
                                         )
                                     }
-                                    
                                 } label: {
                                     Image(systemName: "checkmark.circle.fill")
                                         .foregroundColor(habit.check ? .green : .gray)
                                 }
+                                .buttonStyle(.plain)
                                 
                                 Text(habit.habitName)
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondaryText)
+                                
                                 Spacer()
+                                
                                 Text("\(habit.habitValue)")
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondaryText)
@@ -100,6 +100,7 @@ struct HomeView: View {
                                         } label: {
                                             Image(systemName: "calendar")
                                         }
+                                        .buttonStyle(.plain)
                                     } else {
                                         Button {
                                             showTooltip = true
@@ -107,13 +108,18 @@ struct HomeView: View {
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                                 showTooltip = false
                                             }
+                                            
+                                            showPaywall = true
                                         } label: {
                                             Image(systemName: "lock.fill")
                                                 .foregroundColor(.gray)
                                         }
+                                        .buttonStyle(.plain)
                                     }
                                 }
                             }
+                            .contentShape(Rectangle())
+                            
                             .listRowBackground(Color.backgroundMain)
                         }
                         .onDelete(perform: habitViewModel.deleteHabit)
@@ -122,30 +128,69 @@ struct HomeView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .background(Color.backgroundMain)
-                .onAppear {
-                    habitViewModel.fetchData()
-                    
-                    notificationManager.requestPermission()
-                    
-                    notificationManager.cancelDailyCompletionReminder()
-                    notificationManager.scheduleDailyCompletionReminder()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        withAnimation {
-                            showSwipeHint = false
-                        }
-                    }
-            
-                    for habit in habitViewModel.habits {
-                        if HabitTrackerViewModel.checkBreakStreak(habit) {
-                            habit.totalDay = 0
-                            try? modelContext.save()
-                            habitViewModel.fetchData()
-                        }
-                    }
+
+                if showTooltip {
+                    Text("Premium feature 🔒")
+                        .padding(8)
+                        .background(Color.black.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .transition(.opacity)
                 }
                 
                 Spacer()
+            }
+        }
+        
+        .sheet(item: $selectedHabitForCalendar) { habit in
+            CalendarView(checkDays: habit.stats)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        
+        .sheet(isPresented: $showPaywall) {
+            VStack(spacing: 20) {
+                Text("Go Premium")
+                    .font(.largeTitle)
+                
+                Text("• Unlimited habits\n• Calendar access")
+                
+                Button("Subscribe for $0.99") {
+                    Task {
+                        await subscriptionManager.purchase()
+                        showPaywall = false
+                    }
+                }
+                
+                Button("Restore purchases") {
+                    Task {
+                        await subscriptionManager.restore()
+                    }
+                }
+            }
+            .padding()
+            .presentationDetents([.medium])
+        }
+        
+        .onAppear {
+            habitViewModel.fetchData()
+            
+            notificationManager.requestPermission()
+            notificationManager.cancelDailyCompletionReminder()
+            notificationManager.scheduleDailyCompletionReminder()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                withAnimation {
+                    showSwipeHint = false
+                }
+            }
+
+            for habit in habitViewModel.habits {
+                if HabitTrackerViewModel.checkBreakStreak(habit) {
+                    habit.totalDay = 0
+                    try? modelContext.save()
+                    habitViewModel.fetchData()
+                }
             }
         }
     }

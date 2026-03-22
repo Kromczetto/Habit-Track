@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CF4CFAC92F7091E30012BB8E /* StoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = CF4CFAC82F7091E30012BB8E /* StoreKitConfig.storekit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		CF07152C2E70CA5900D52831 /* Habit Track.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Track.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF4CFAC82F7091E30012BB8E /* StoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitConfig.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		CF0715232E70CA5900D52831 = {
 			isa = PBXGroup;
 			children = (
+				CF4CFAC82F7091E30012BB8E /* StoreKitConfig.storekit */,
 				CF07152E2E70CA5900D52831 /* Habit Track */,
 				CF07152D2E70CA5900D52831 /* Products */,
 			);
@@ -111,6 +117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF4CFAC92F7091E30012BB8E /* StoreKitConfig.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

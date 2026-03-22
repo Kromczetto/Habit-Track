@@ -28,10 +28,10 @@ struct SettingsView: View {
                         Text(lang).tag(lang)
                     }
                 }
-                Button("Clear app data") {
-                    print("Clear app data")
-                }
-                .foregroundStyle(.red)
+//                Button("Clear app data") {
+//                    print("Clear app data")
+//                }
+//                .foregroundStyle(.red)
             }
             .onAppear {
                 let currentCode = appLanguageManager.locale.identifier

@@ -48,6 +48,8 @@ struct AddNewHabitView: View {
                 Text("Add your new habit")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7) 
                     .foregroundStyle(Color.secondaryText)
                     .padding(.top, 80)
                 Spacer()
@@ -105,7 +107,7 @@ struct AddNewHabitView: View {
                             .padding(.vertical, 20)
                     }
                     .padding(.top, 40)
-                    .disabled(subscriptionManager.isPremium && habitViewModel.habits.count >= 3)
+                    .disabled(!subscriptionManager.isPremium && habitViewModel.habits.count >= 3)
                     .disabled(habitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? false : true)
                     .alert(habitViewModel.errorMessage, isPresented: $habitViewModel.isError) {
                         Button("OK", role: .cancel) {}
@@ -117,8 +119,17 @@ struct AddNewHabitView: View {
                 Spacer()
             }
         }
+        .gesture(
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.height > 50 {
+                        UIApplication.shared.hideKeyboard()
+                    }
+                }
+        )
         .onTapGesture {
             isTextFieldFocus = false
+            UIApplication.shared.hideKeyboard()
         }
         .sheet(isPresented: $showPaywall) {
             VStack(spacing: 20) {

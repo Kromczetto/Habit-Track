@@ -17,99 +17,134 @@ struct ProfileView: View {
         ZStack {
             Color.backgroundMain
                 .ignoresSafeArea()
-            ScrollView() {
-                HStack {
-                    Spacer()
-                    Text("Top Habits")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.secondary)
+            if habitStatisticsViewModel.totalWeightForToday() != 0 {
+                ScrollView() {
+                    HStack {
+                        Spacer()
+                        Text("Top Habits")
+                            .font(.largeTitle)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7) 
+                            .fontWeight(.bold)
+                            .foregroundColor(.secondary)
+                            
+                        Spacer()
                         
-                    Spacer()
-                        Image(systemName: "gearshape")
-                            .font(.system(size: 24))
-                            .foregroundColor(.black)
-                }
-                .padding()
-                
-                VStack(spacing: 30) {
-        
-                    Chart {
-                        ForEach(habitStatisticsViewModel.topHabitsWithOther()) { item in
-                            SectorMark(
-                                angle: .value("Days", item.days),
-                                innerRadius: .ratio(0.5)
-                            )
-                            .foregroundStyle(item.color)
+                        NavigationLink(destination: SettingsView()) {
+                            Image(systemName: "gearshape")
+                                .font(.system(size: 24))
+                                .foregroundColor(.black)
                         }
+                        
                     }
-                    .frame(height: 250)
                     .padding()
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        ForEach(habitStatisticsViewModel.topHabitsWithOther()) { item in
-                            HStack {
-                                if item.days > 0 {
-                                    Circle()
-                                        .fill(item.color)
-                                        .frame(width: 16, height: 16)
-                                    Text("\(item.name)\(item.name != "Other" ? ": \(item.days)" : "")")
-                                        .foregroundColor(.primary)
-                                    Image(systemName: "flame.fill")
-                                        .foregroundColor(item.check ? .orange : .gray)
+                    VStack(spacing: 30) {
+            
+                        Chart {
+                            ForEach(habitStatisticsViewModel.topHabitsWithOther()) { item in
+                                SectorMark(
+                                    angle: .value("Days", item.days),
+                                    innerRadius: .ratio(0.5)
+                                )
+                                .foregroundStyle(item.color)
+                            }
+                        }
+                        .frame(height: 250)
+                        .padding()
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(habitStatisticsViewModel.topHabitsWithOther()) { item in
+                                HStack {
+                                    if item.days > 0 {
+                                        Circle()
+                                            .fill(item.color)
+                                            .frame(width: 16, height: 16)
+                                        Text("\(item.name)\(item.name != "Other" ? ": \(item.days)" : "")")
+                                            .foregroundColor(.primary)
+                                        Image(systemName: "flame.fill")
+                                            .foregroundColor(item.check ? .orange : .gray)
+                                    }
                                 }
                             }
                         }
-                    }
-                    .padding()
-                    
-                    Text("Today's Completed Weight: \(habitStatisticsViewModel.totalWeightForToday())")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                        .onAppear {
-                            habitViewModel.fetchData()
-                        }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .leading) {
-                        Text("Summary of 30 days")
-                            .font(.title3)
+                        .padding()
+                        
+                        Text("Today's Completed Weight: \(habitStatisticsViewModel.totalWeightForToday())")
+                            .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
+                            .onAppear {
+                                habitViewModel.fetchData()
+                            }
                         
-                        let summaries = habitViewModel.getLast30DaysSummary()
+                        Spacer()
                         
-                        Chart(summaries) { day in
-                            LineMark(
-                                x: .value("Day", day.date),
-                                y: .value("Sum", day.totalValue)
-                            )
-                            PointMark(
-                                x: .value("Day", day.date),
-                                y: .value("Sum", day.totalValue)
-                            )
-                        }
-                        .background(Color.backgroundMain)
-                        .frame(height: 200)
-                        .chartXAxis {
-                            AxisMarks(values: .stride(by: .day, count: 5)) { value in
-                                AxisGridLine()
-                                AxisValueLabel(format: .dateTime.day().month(.abbreviated))
+                        VStack(alignment: .leading) {
+                            Text("Summary of 30 days")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                            
+                            let summaries = habitViewModel.getLast30DaysSummary()
+                            
+                            Chart(summaries) { day in
+                                LineMark(
+                                    x: .value("Day", day.date),
+                                    y: .value("Sum", day.totalValue)
+                                )
+                                PointMark(
+                                    x: .value("Day", day.date),
+                                    y: .value("Sum", day.totalValue)
+                                )
+                            }
+                            .background(Color.backgroundMain)
+                            .frame(height: 200)
+                            .chartXAxis {
+                                AxisMarks(values: .stride(by: .day, count: 5)) { value in
+                                    AxisGridLine()
+                                    AxisValueLabel(format: .dateTime.day().month(.abbreviated))
+                                }
+                            }
+                            .chartYAxis {
+                                AxisMarks(position: .leading)
                             }
                         }
-                        .chartYAxis {
-                            AxisMarks(position: .leading)
-                        }
+                        .padding(.horizontal)
+                        
+                        Spacer()
                     }
-                    .padding(.horizontal)
-                    
-                    Spacer()
+                    .padding()
                 }
-                .padding()
+                .frame(maxHeight: UIScreen.main.bounds.height * 0.8)
+            } else {
+                VStack(spacing: 20) {
+                       
+                       Spacer()
+                       
+                       Image(systemName: "flame")
+                           .font(.system(size: 50))
+                           .foregroundColor(.orange.opacity(0.7))
+                       
+                       Text("No habits completed today")
+                           .font(.title2)
+                           .fontWeight(.semibold)
+                           .foregroundColor(.primary)
+                       
+                       Text("Start your first streak 🔥")
+                           .font(.subheadline)
+                           .foregroundColor(.gray)
+                       
+                       Text("Even the smallest step counts.\nDo one habit and build momentum.")
+                           .multilineTextAlignment(.center)
+                           .font(.footnote)
+                           .foregroundColor(.gray.opacity(0.8))
+                           .padding(.horizontal, 40)
+                       
+                       Spacer()
+                       
+                   }
             }
-            .frame(maxHeight: UIScreen.main.bounds.height * 0.8)
         }
     }
 }
