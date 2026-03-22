@@ -19,6 +19,9 @@ struct AddNewHabitView: View {
     @State private var feedbackOpacity = 0.5
     @State private var feedbackScale: CGFloat = 1.0
     
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
+    @State private var showPaywall = false
+    
     var body: some View {
         ZStack {
             Color.backgroundMain
@@ -73,11 +76,24 @@ struct AddNewHabitView: View {
                         .frame(height: 150)
                     }
                     Spacer()
+                    
+                    if !subscriptionManager.isPremium {
+                        HStack {
+                            Text("Habits:")
+                            Text("\(habitViewModel.habits.count)/3")
+                                .fontWeight(.bold)
+                                .foregroundColor(habitViewModel.habits.count >= 3 ? .red : .green)
+                        }
+                    }
                     Button {
-                        habitViewModel.addHabit()
-                        isTextFieldFocus = false
-                        if !habitViewModel.isError {
-                            triggerFeedbackAnimation()
+                        if habitViewModel.canAddHabbit(isPremium: subscriptionManager.isPremium) {
+                            habitViewModel.addHabit()
+                            isTextFieldFocus = false
+                            if !habitViewModel.isError {
+                                triggerFeedbackAnimation()
+                            }
+                        } else {
+                            showPaywall = true
                         }
                     } label: {
                         Text("Add your new habit")
@@ -89,6 +105,7 @@ struct AddNewHabitView: View {
                             .padding(.vertical, 20)
                     }
                     .padding(.top, 40)
+                    .disabled(subscriptionManager.isPremium && habitViewModel.habits.count >= 3)
                     .disabled(habitViewModel.habitName.trimmingCharacters(in: .whitespaces).count > 3 ? false : true)
                     .alert(habitViewModel.errorMessage, isPresented: $habitViewModel.isError) {
                         Button("OK", role: .cancel) {}
@@ -102,6 +119,28 @@ struct AddNewHabitView: View {
         }
         .onTapGesture {
             isTextFieldFocus = false
+        }
+        .sheet(isPresented: $showPaywall) {
+            VStack(spacing: 20) {
+                Text("Go Premium")
+                    .font(.largeTitle)
+                
+                Text("• Unlimited habits\n• Calendar access")
+                        
+                Button("Subscribe for $0.99") {
+                    Task {
+                        await subscriptionManager.purchase()
+                        showPaywall = false
+                    }
+                }
+                
+                Button("Restore purchases") {
+                    Task {
+                        await subscriptionManager.restore()
+                    }
+                }
+            }
+            .padding()
         }
     }
     

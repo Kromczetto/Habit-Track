@@ -158,4 +158,8 @@ class HabitViewModel: ObservableObject {
         
         return result.sorted(by: { $0.date < $1.date })
     }
+    
+    func canAddHabbit(isPremium: Bool) -> Bool {
+        return isPremium || habits.count < 3
+    }
 }

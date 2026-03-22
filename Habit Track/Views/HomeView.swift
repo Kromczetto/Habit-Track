@@ -10,11 +10,16 @@ import SwiftData
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject var subscriptionManager: SubscriptionManager
+    
     @StateObject var habitViewModel: HabitViewModel
     
     @State private var check: Bool = false
     @State private var selectedHabitForCalendar: Habit? = nil
     @State private var showSwipeHint: Bool = true
+    
+    @State private var showTooltip = false
+    @State private var showPaywall = false
     
     private let notificationManager = NotificationManager.shared
     
@@ -43,6 +48,15 @@ struct HomeView: View {
                 Spacer()
                 
                 List {
+                    if showTooltip {
+                        Text("Premium feature")
+                           .padding(8)
+                           .background(Color.black.opacity(0.8))
+                           .foregroundColor(.white)
+                           .cornerRadius(8)
+                           .transition(.opacity)
+                    }
+                    
                     if habitViewModel.habits.isEmpty {
                         VStack {
                             Text("You do not have any habits yet")
@@ -78,17 +92,26 @@ struct HomeView: View {
                                 Text("\(habit.habitValue)")
                                     .fontWeight(.semibold)
                                     .foregroundStyle(Color.secondaryText)
+
                                 if habit.check {
-                                    Button() {
-                                        selectedHabitForCalendar = habit
-                                    } label: {
-                                        Image(systemName: "calendar")
+                                    if subscriptionManager.isPremium {
+                                        Button {
+                                            selectedHabitForCalendar = habit
+                                        } label: {
+                                            Image(systemName: "calendar")
+                                        }
+                                    } else {
+                                        Button {
+                                            showTooltip = true
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                showTooltip = false
+                                            }
+                                        } label: {
+                                            Image(systemName: "lock.fill")
+                                                .foregroundColor(.gray)
+                                        }
                                     }
-                                    .buttonStyle(.plain)
-                                    .sheet(item: $selectedHabitForCalendar) { habit in
-                                        CalendarView(checkDays: habit.stats)
-                                    }
-                                    .padding(.leading, 10)
                                 }
                             }
                             .listRowBackground(Color.backgroundMain)
